@@ -1,1 +1,1 @@
-# Quick-Mule
+# Quick Mule
