@@ -1,0 +1,26 @@
+{
+  "name": "quick-mule",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/ersheff/Quick-Mule#readme",
+  "bugs": {
+    "url": "https://github.com/ersheff/Quick-Mule/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ersheff/Quick-Mule.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@fastify/static": "^8.3.0",
+    "@fastify/websocket": "^11.2.0",
+    "fastify": "^5.6.2"
+  }
+}

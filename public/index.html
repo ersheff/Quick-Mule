@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="qrcode.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Max</h1>
+    <p id="msg-placeholder"></p>
+    <div id="qr-placeholder"></div>
+
+    <script>
+        let confirmed = false;
+        const msgPlaceholder = document.getElementById("msg-placeholder");
+        const qrPlaceholder = document.getElementById("qr-placeholder");
+
+        const paramsString = window.location.search;
+        const searchParams = new URLSearchParams(paramsString);
+
+        const id = searchParams.get('id');
+        const wsURL = `ws://${window.location.host}/ws_max${id ? `?id=${id}` : ''}`;
+
+        const socket = new WebSocket(wsURL);
+
+        socket.addEventListener('message', event => {
+            if (!confirmed) {
+                msgPlaceholder.innerText = event.data;
+                confirmed = true;
+                new QRCode(qrPlaceholder, `${window.location.href}mobile?id=${event.data}`);
+                return;
+            }
+            console.log('Message from server: ', JSON.parse(event.data));
+        });
+
+        socket.addEventListener('close', event => {
+            msgPlaceholder.innerText = event.reason;
+        });
+    </script>
+</body>
+
+</html>

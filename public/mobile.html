@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Mobile</h1>
+    <p id="placeholder">Not connected</p>
+    <input type="range" id="slider1">
+
+
+    <script>
+        let confirmed = false;
+        const placeholder = document.getElementById("placeholder");
+        const slider1 = document.getElementById('slider1');
+
+        const paramsString = window.location.search;
+        const searchParams = new URLSearchParams(paramsString);
+
+        const id = searchParams.get('id');
+        const wsURL = `ws://${window.location.host}/ws_mobile${id ? `?id=${id}` : ''}`;
+
+        const socket = new WebSocket(wsURL);
+
+        socket.addEventListener('message', event => {
+            if (!confirmed) {
+                placeholder.innerText = event.data;
+                confirmed = true;
+            }
+        });
+
+        socket.addEventListener('close', event => {
+            placeholder.innerText = event.reason;
+        });
+
+        slider1.addEventListener('input', event => {
+            const payload = {
+                header: 'slider1',
+                value: event.target.value
+            }
+            socket.send(JSON.stringify(payload));
+        })
+    </script>
+
+</body>
+
+</html>
