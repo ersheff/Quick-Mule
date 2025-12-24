@@ -22,7 +22,7 @@
         const searchParams = new URLSearchParams(paramsString);
 
         const id = searchParams.get('id');
-        const wsURL = `ws://${window.location.host}/ws_max${id ? `?id=${id}` : ''}`;
+        const wsURL = `wss://${window.location.host}/ws_max${id ? `?id=${id}` : ''}`;
 
         const socket = new WebSocket(wsURL);
 
